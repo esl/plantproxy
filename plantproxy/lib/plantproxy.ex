@@ -1,6 +1,6 @@
 defmodule Plantproxy do
   use Nebulex.Caching
-  use Logger
+  require Logger
 
   # alias MyApp.Accounts.User
   alias Plantproxy.PartitionedCache, as: Cache
