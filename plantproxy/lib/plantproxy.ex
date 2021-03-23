@@ -1,5 +1,6 @@
 defmodule Plantproxy do
   use Nebulex.Caching
+  use Logger
 
   # alias MyApp.Accounts.User
   alias Plantproxy.PartitionedCache, as: Cache
@@ -39,7 +40,8 @@ defmodule Plantproxy do
        }} ->
         {:ok, body}
 
-      _ ->
+      resp ->
+        Logger.error("bad response : #{inspect(resp)}")
         {:error, "can't generate image"}
     end
   end

@@ -23,6 +23,7 @@ defmodule Plantproxy.Plug do
     %{"src" => src} = conn.query_params
 
     {:ok, data} = Plantproxy.get_raw_github(src)
+
     {:ok, image} = Plantproxy.generate_image(data, src)
 
     conn
