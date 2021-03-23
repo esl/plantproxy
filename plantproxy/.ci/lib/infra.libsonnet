@@ -1,5 +1,5 @@
 {
-  service(name, namespace):: {
+  service(name, port, target_port,namespace):: {
     apiVersion: 'v1',
     kind: 'Service',
     metadata: {
@@ -13,8 +13,8 @@
       ports: [
         {
           name: name + '-app',
-          port: 80,
-          targetPort: 80,
+          port: port,
+          targetPort: target_port,
         },
       ],
       selector: {
