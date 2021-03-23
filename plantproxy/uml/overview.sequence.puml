@@ -1,0 +1,13 @@
+@startuml
+autonumber
+
+GithubPage -> Plantproxy : https://raw.github.... +TOKEN
+
+
+Plantproxy -> Plantproxy: cache(getimage(url + token))
+
+Plantproxy -> Plantuml : generate png from file payload
+
+Plantproxy -> GithubPage : Theres the image
+
+@enduml
