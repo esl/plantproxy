@@ -1,21 +1,19 @@
 # Plantproxy
 
-**TODO: Add description**
+What we need
 
-## Installation
+1. Basic implementation is working
+  1. Module implementing github call is working
+  2. Cache is working
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `plantproxy` to your list of dependencies in `mix.exs`:
+* docker compose to run this and the plantuml server
+* tying the call to the web interface to the call to the plantuml server to render
+* creating an elixir release 
+* writing a doc 🤮
+* deploy to kubernetes
+* ...
 
-```elixir
-def deps do
-  [
-    {:plantproxy, "~> 0.1.0"}
-  ]
-end
-```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/plantproxy](https://hexdocs.pm/plantproxy).
+
+
 
