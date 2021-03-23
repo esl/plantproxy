@@ -85,7 +85,7 @@
       namespace: namespace,
       annotations: {
         'kubernetes.io/ingress.class': 'nginx',
-        'cert-manager.io/cluster-issuer': 'letsencrypt-staging',
+        'cert-manager.io/issuer': 'plantproxy-plantproxy-letsencrypt-production',
         'nginx.ingress.kubernetes.io/rewrite-target': '/$1',
         'nginx.ingress.kubernetes.io/use-regex': 'true',
       },
@@ -116,14 +116,14 @@
           },
         },
       ],
-      // tls: [
-      //   {
-      //     hosts: [
-      //       $.generateFQDN(cname, dns_base),
-      //     ],
-      //     secretName: $.generateSecretName(cname, namespace),
-      //   },
-      // ],
+      tls: [
+        {
+          hosts: [
+            $.generateFQDN(cname, dns_base),
+          ],
+          secretName: $.generateSecretName(cname, namespace),
+        },
+      ],
     },
   },
   generateCertificate(service, namespace, dns_base)::
