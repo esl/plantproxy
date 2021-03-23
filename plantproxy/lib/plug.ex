@@ -6,27 +6,28 @@ defmodule Plantproxy.Plug do
   plug(CORSPlug)
   plug(:retrieve)
 
+  import Plug.Conn
+
+  @doc """
+  request comes in like https://foo:8081/proxy?src=https://raw.githubusercontent.com/esl/betinfra/main/uml/ci.cd.activity.puml?token=AHUCR5XEIOMMOWHH5ATFMXLAKCQPA
+  """
   def retrieve(conn, _opts) do
-    "/" <> id = conn.request_path
+    # "/prox" <> id = conn.request_path
 
-    conn |> resp(200, "yeah...")
+    # https://hexdocs.pm/plug/Plug.Conn.html#fetch_query_params/2
 
-    # TODO implement the call to the plantuml proxy server
+    conn = Plug.Conn.fetch_query_params(conn)
 
-    # case Cache.retrieve(id) do
-    #   {:ok, payload, meta} ->
-    #     respond_with_data(conn, payload, meta)
+    IO.puts(inspect(conn.query_params))
 
-    #   :not_cached ->
-    #     case BetEpsStore.retrieve(id) do
-    #       {:ok, payload, meta} = result ->
-    #         :ok = Cache.save(id, result)
-    #         respond_with_data(conn, payload, meta)
+    %{"src" => src} = conn.query_params
 
-    #       {:error, _} = err ->
-    #         handle_error(conn, err)
-    #     end
-    # end
+    {:ok, data} = Plantproxy.get_raw_github(src)
+    {:ok, image} = Plantproxy.generate_image(data, src)
+
+    conn
+    |> put_resp_header("content-type", "image/png")
+    |> resp(200, image)
   end
 
   # defp respond_with_data(conn, payload, metadata) do

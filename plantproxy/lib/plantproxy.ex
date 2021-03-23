@@ -6,6 +6,7 @@ defmodule Plantproxy do
   # alias MyApp.Repo
 
   @ttl :timer.hours(1)
+  @image_url "http://localhost:8080/png/"
 
   @decorate cacheable(cache: Cache, key: {:github, url}, opts: [ttl: @ttl])
   def get_raw_github(url) do
@@ -19,6 +20,21 @@ defmodule Plantproxy do
 
       _ ->
         {:error, "can't fetch url" <> url}
+    end
+  end
+
+  @decorate cacheable(cache: Cache, key: {:plantuml, path}, opts: [ttl: @ttl])
+  def generate_image(data, path) do
+    case HTTPoison.request(:post, @image_url, data, [{"Content-Type", "text/plain"}]) do
+      {:ok,
+       %HTTPoison.Response{
+         body: body,
+         status_code: 200
+       }} ->
+        {:ok, body}
+
+      _ ->
+        {:error, "can't generate image"}
     end
   end
 end
