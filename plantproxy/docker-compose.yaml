@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  plantuml:
+    image: 'plantuml/plantuml-server:jetty-v1.2021.1'
+    ports:
+      - '8080:8080'
+    restart: always
+  plantproxy:
+    build: .
+    depends_on:
+      - plantuml
+    ports:
+      - '8081:8081'
