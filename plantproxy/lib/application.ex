@@ -12,7 +12,7 @@ defmodule Plantproxy.Application do
       Plantproxy.PartitionedCache
     ]
 
-    opts = [strategy: :one_for_one, name: BetEpsWeb.Supervisor]
+    opts = [strategy: :one_for_one, name: Plantproxy.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
