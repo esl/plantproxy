@@ -19,4 +19,4 @@ ENV PLANTUML_SERVER=host.docker.internal
 ENV PLANTUML_SERVER_PORT=8080
 
 ENTRYPOINT ["/app/_build/prod/rel/plantproxy/bin/plantproxy"]
-CMD [""]
+CMD ["start"]

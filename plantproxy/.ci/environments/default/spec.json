@@ -5,7 +5,7 @@
     "name": "default"
   },
   "spec": {
-    "apiServer": "https://104.199.23.22",
+    "apiServer": "https://34.78.181.242",
     "namespace": "default",
     "resourceDefaults": {},
     "expectVersions": {}
