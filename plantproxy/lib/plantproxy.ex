@@ -6,7 +6,6 @@ defmodule Plantproxy do
   # alias MyApp.Repo
 
   @ttl :timer.hours(1)
-  @image_url "http://localhost:8080/png/"
 
   @decorate cacheable(cache: Cache, key: {:github, url}, opts: [ttl: @ttl])
   def get_raw_github(url) do
@@ -25,7 +24,14 @@ defmodule Plantproxy do
 
   @decorate cacheable(cache: Cache, key: {:plantuml, path}, opts: [ttl: @ttl])
   def generate_image(data, path) do
-    case HTTPoison.request(:post, @image_url, data, [{"Content-Type", "text/plain"}]) do
+    #     ENV PLANTUML_SERVER=host.docker.internal
+    # ENV PLANTUML_SERVER_PORT=8080
+    plantuml_server = System.fetch_env!("PLANTUML_SERVER")
+    plantuml_server_port = System.fetch_env!("PLANTUML_SERVER_PORT")
+
+    image_url = "http://#{plantuml_server}:#{plantuml_server_port}/png/"
+
+    case HTTPoison.request(:post, image_url, data, [{"Content-Type", "text/plain"}]) do
       {:ok,
        %HTTPoison.Response{
          body: body,

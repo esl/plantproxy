@@ -1,5 +1,6 @@
 # syntax = docker/dockerfile:experimental
 FROM elixir:1.11.2-alpine as builder
+
 ARG MIX_ENV=prod
 RUN apk add --no-cache --update git openssh-client
 WORKDIR /app
@@ -13,8 +14,9 @@ COPY lib lib
 RUN mix compile
 COPY ./rel ./rel
 RUN MIX_ENV=prod mix release > /dev/null
-# FROM alpine:3.12 AS release
-WORKDIR /app
-COPY --from=builder /app/_build/prod/rel/plantproxy/ .
-ENTRYPOINT ["./bin/plantproxy"]
+
+ENV PLANTUML_SERVER=host.docker.internal
+ENV PLANTUML_SERVER_PORT=8080
+
+ENTRYPOINT ["/app/_build/prod/rel/plantproxy/bin/plantproxy"]
 CMD [""]
