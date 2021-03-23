@@ -8,7 +8,8 @@ defmodule Plantproxy.Application do
     port = 8081
 
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Plantproxy.Plug, port: port}
+      {Plug.Cowboy, scheme: :http, plug: Plantproxy.Plug, port: port},
+      Plantproxy.PartitionedCache
     ]
 
     opts = [strategy: :one_for_one, name: BetEpsWeb.Supervisor]
