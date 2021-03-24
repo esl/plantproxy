@@ -161,7 +161,7 @@
           server: 'https://acme-v02.api.letsencrypt.org/directory',
           email: 'sysadmin@erlang-solutions.com',
           privateKeySecretRef: {
-            name: $.generateSecretName(service, namespace),
+            name: $.generateSecretName(service, namespace) + "-issuer",
           },
           solvers: [
             {
